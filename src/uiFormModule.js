@@ -1,0 +1,1 @@
+uiFormModule = angular.module('uiFormModule', []);

@@ -1,0 +1,56 @@
+/**
+ * This CSS file controls the form element directives.
+ */
+.ui-form {
+
+}
+
+/* Edit mode. Show form fields and hide static fields. */
+.ui-form[data-edit-mode="true"] div.form-group .form-control {
+
+    display: block;
+}
+
+.ui-form[data-edit-mode="true"] div.form-group p.form-control-static {
+
+    display: none;
+}
+
+/* View mode. Hide form fields and show static fields */
+.ui-form[data-edit-mode="false"] div.form-group .form-control {
+
+    display: none;
+}
+
+.ui-form[data-edit-mode="false"] div.form-group p.form-control-static {
+
+    display: block;
+}
+
+/* Required field style for input elements */
+.ui-form div.form-group input.form-control[data-ng-required="true"],
+.ui-form div.form-group textarea.form-control[data-ng-required="true"],
+.ui-form div.form-group select.form-control[data-ng-required="true"] {
+
+    border-left: 4px solid #A94442;
+}
+
+
+/* Changed field style for input elements */
+.ui-form div.form-group input.form-control[data-ng-changed="true"],
+.ui-form div.form-group textarea.form-control[data-ng-changed="true"],
+.ui-form div.form-group select.form-control[data-ng-changed="true"] {
+
+    border-right: 4px solid #23CDFD;
+}
+
+/* Readonly and disabled states. */
+.ui-form div.form-group input.form-control[readonly='readonly'],
+.ui-form div.form-group textarea.form-control[readonly='readonly'],
+.ui-form div.form-group select.form-control[readonly='readonly'],
+.ui-form div.form-group input.form-control[disabled='disabled'],
+.ui-form div.form-group textarea.form-control[disabled='disabled'],
+.ui-form div.form-group select.form-control[disabled='disabled'] {
+
+    border: transparent;
+}
