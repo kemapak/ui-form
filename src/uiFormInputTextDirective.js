@@ -1,4 +1,4 @@
-uiFormModule.directive('uiFormInputText', ['$compile', 'uiFormService', function($compile, uiFormService){
+uiFormModule.directive('uiFormInputText', ['uiFormService', function(uiFormService){
 
 	return {
 		restrict: 'E',
