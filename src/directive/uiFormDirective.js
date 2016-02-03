@@ -1,4 +1,4 @@
-uiFormModule.directive('uiForm', ['uiFormService', '$compile', function (uiFormService, $compile) {
+uiFormModule.directive('uiForm', ['uiFormService', 'uiFormValidationService', '$compile', function (uiFormService, uiFormValidationService, $compile) {
 
     return {
         restrict: 'E',
@@ -17,16 +17,14 @@ uiFormModule.directive('uiForm', ['uiFormService', '$compile', function (uiFormS
 
             scope.getErrorMessage = function(formElementName) {
 
-                if ('undefined' == this[this.formName][formElementName]) {
+                if ('undefined' == typeof this[this.formName][formElementName]) {
                     return;
                 }
 
                 var field = this[this.formName][formElementName];
 
 
-                return uiFormService.getMessages(field, this.formName, formElementName);
-
-
+                return uiFormValidationService.getValidationMessages(field, this.formName, formElementName);
             }
 
             scope.getEditMode = function() {

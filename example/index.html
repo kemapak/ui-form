@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+  <title>Form Elements</title>
+  <link href="../lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+  <link href="../src/ui-form.css" rel="stylesheet" />
+  <script src="../lib/angular/angular.js"></script>
+  <script src="../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+</head>
+<body data-ng-app="uiFormApp" class="container">
+<header>
+
+</header>
+<main>
+  <section class="col-md-12" data-ng-controller="UiFormAppController as ctrl">
+    <header>
+      <h1>Angular form element directives</h1>
+    </header>
+    <ui-form name="sampleForm" class="form-horizontal" data-edit-mode="{{ctrl.model.editMode}}" data-parent-controller="ctrl"
+             data-ng-submit="ctrl.submitHandler()">
+      <div class="row">
+        <ui-form-input-text element-name="sampleText"
+                            data-ng-model="ctrl.model.payload.name"
+                            data-label="ctrl.model.metadata.name.label"
+                            data-config="ctrl.model.metadata.name"
+                            class="col-md-6">
+        </ui-form-input-text>
+        <ui-form-input-text element-name="sampleText2"
+                            data-ng-model="ctrl.model.payload.last"
+                            data-label="ctrl.model.metadata.last.label"
+                            data-config="ctrl.model.metadata.last"
+                            class="col-md-6">
+        </ui-form-input-text>
+      </div>
+      <!--<hr>-->
+      <!--<fieldset class="row" data-ng-repeat="item in ctrl.model.payload.hobbies">-->
+        <!--<legend>ctrl.model.metadata.hobbies.label</legend>-->
+        <!--<ui-form-input-checkbox element-name="sampleCheckbox"-->
+                            <!--data-ng-model="item.value"-->
+                            <!--data-label="item.label"-->
+                            <!--data-config="ctrl.model.metadata.hobbies">-->
+        <!--</ui-form-input-checkbox>-->
+      <!--</fieldset>-->
+      <!--<hr>-->
+      <!--<div class="row">-->
+        <!--&lt;!&ndash;<ui-form-input-checkbox element-name="sampleCheckbox2"&ndash;&gt;-->
+                                <!--&lt;!&ndash;data-ng-model="ctrl.model.payload.acceptLicenseAgreement.value"&ndash;&gt;-->
+                                <!--&lt;!&ndash;data-label="ctrl.model.payload.acceptLicenseAgreement.label"&ndash;&gt;-->
+                                <!--&lt;!&ndash;data-config="ctrl.model.metadata.acceptLicenseAgreement"&ndash;&gt;-->
+                                <!--&lt;!&ndash;class="col-md-6">&ndash;&gt;-->
+        <!--&lt;!&ndash;</ui-form-input-checkbox>&ndash;&gt;-->
+      <!--</div>-->
+      <!--<hr>-->
+      <div class="row">
+        <ui-form-input-text element-name="sampleNumber"
+                            data-ng-model="ctrl.model.payload.age"
+                            data-label="ctrl.model.metadata.age.label"
+                            data-config="ctrl.model.metadata.age"
+                            class="col-md-6">
+        </ui-form-input-text>
+        <ui-form-input-text element-name="sampleDate"
+                            data-ng-model="ctrl.model.payload.birthDay"
+                            data-label="ctrl.model.metadata.birthDay.label"
+                            data-config="ctrl.model.metadata.birthDay"
+                            class="col-md-6">
+        </ui-form-input-text>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="button" class="btn btn-primary btn-block" data-ng-click="ctrl.editMode();" value="Edit Mode" />
+          <input type="button" class="btn btn-primary btn-block" data-ng-click="ctrl.viewMode();" value="View Mode" />
+        </div>
+      </div>
+    </ui-form>
+  </section>
+</main>
+<footer>
+
+</footer>
+
+<script src="../src/uiFormModule.js"></script>
+<script src="../src/service/uiFormValidationService.js"></script>
+<script src="../src/service/uiFormService.js"></script>
+<script src="../src/directive/uiFormDirective.js"></script>
+<script src="../src/directive/uiFormInputTextDirective.js"></script>
+<script src="../src/directive/uiFormCheckboxDirective.js"></script>
+
+<script src="uiFormApp.js"></script>
+</body>
+</html>

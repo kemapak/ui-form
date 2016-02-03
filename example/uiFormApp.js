@@ -1,4 +1,4 @@
-angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiFormAppController', ['$scope', function ($scope) {
+var uiFormApp = angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiFormAppController', ['$scope', function ($scope) {
 
 	var _this = this;
 
@@ -8,6 +8,8 @@ angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiForm
 			label: 'First Name',
 			placeholder: 'Please enter your name',
 			type: 'text',
+			labelGridSize: 'col-sm-4',
+			valueGridSize: 'col-sm-8',
 			isRequired: false,
 			minlength: 2,
 			maxlength: 5,
@@ -17,6 +19,8 @@ angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiForm
 			label: 'Last Name',
 			placeholder: 'Please enter your last name',
 			type: 'text',
+			labelGridSize: 'col-sm-4',
+			valueGridSize: 'col-sm-8',
 			isRequired: true,
 			minlength: 3,
 			maxlength: 6,
@@ -26,6 +30,8 @@ angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiForm
 			label: 'Age',
 			placeholder: 'Please enter your age',
 			type: 'number',
+			labelGridSize: 'col-sm-4',
+			valueGridSize: 'col-sm-8',
 			isRequired: true,
 			max: 30
 		},
@@ -33,9 +39,27 @@ angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiForm
 			label: 'Birth Day',
 			placeholder: 'Please enter your birth date',
 			type: 'date',
+			labelGridSize: 'col-sm-4',
+			valueGridSize: 'col-sm-8',
 			isRequired: true,
 			min: '2013-01-01'
+		},
+		hobbies: {
+			label: 'Hobbies',
+			type: 'checkbox',
+			labelGridSize: 'col-sm-4',
+			valueGridSize: 'col-sm-8',
+			layout: 'horizontal',
+			isRequired: true
+		},
+		acceptLicenseAgreement: {
+			label: '',
+			type: 'checkbox',
+			labelGridSize: 'col-sm-4',
+			valueGridSize: 'col-sm-8',
+			isRequired: true
 		}
+
 	}
 
 	// Should be fetched/submitted through service.
@@ -43,34 +67,40 @@ angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiForm
 		name: 'John',
 		last: 'Doe',
 		age: 10,
-		birthDay: new Date('2000-01-01')
-	}
-
-	var payload2 = {
-		name: 'Jane',
-		last: 'Smith',
-		age: 30,
-		birthDay: new Date('1998-11-11')
-	}
-
-	_this.submitHandler = function () {
-
-		console.log('Submitted');
-	}
-
-	_this.getScope = function() {
-		return $scope;
-	}
-
-	_this.changeLabel = function(){
-		_this.model.metadata.name.label = 'New Label';
+		birthDay: new Date('2000-01-01'),
+		hobbies: [
+			{
+				label: 'Chess',
+				value: true
+			},
+			{
+				label: 'GO',
+				value: false
+			},
+			{
+				label: 'Basketball',
+				value: false
+			},
+			{
+				label: 'Reading',
+				value: false
+			},
+			{
+				label: 'Smoking',
+				value: true
+			}
+		],
+		acceptLicenseAgreement: {
+			label: 'Accept License Agreement',
+			value: true
+		}
 	}
 
 	// The model should be fetched by a service in real life example.
 	_this.model = {
 		metadata: metadata,
 		payload: payload,
-		formMode: true
+		editMode: true
 	};
 
 	_this.editMode = function() {
@@ -85,9 +115,9 @@ angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).controller('UiForm
 	_this.toggleFormMode = function(mode) {
 
 		if (!mode) {
-			_this.model.formMode = false;
+			_this.model.editMode = false;
 		} else {
-			_this.model.formMode = true;
+			_this.model.editMode = true;
 		}
 	}
 }]);

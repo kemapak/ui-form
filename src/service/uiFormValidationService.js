@@ -1,7 +1,13 @@
-uiFormModule.factory('uiFormService', function(){
+uiFormModule.factory('uiFormValidationService', ['$http', function($http){
+
+    var _messages = {};
+
+    $http.get('src/validationMessages.bundle.JSON').then(function(response) {
+        _messages = response.data;
+    });
 
     var addIsRequiredValidation = function(element) {
-        element.setAttribute('required', 'required');
+        element.setAttribute('data-ng-required', 'true');
     };
 
     var addMinLengthValidation = function(element, value) {
@@ -24,46 +30,8 @@ uiFormModule.factory('uiFormService', function(){
         element.setAttribute('data-ng-pattern', regex);
     };
 
-    // This will be fetched through meta-data.
-    var _messages = {
-        required: 'This field is required.',
-        number: 'This field should be a numeric field.',
-        integer: 'This field should be an integer number.',
-        float: 'This field should be an float number.',
-        date: 'This should be a valid date field.',
-        boolean: 'Should be a boolean',
-        minlength: 'This field should be at least %1% characters.',
-        maxlength: 'This field should be at most %1% characters.',
-        max: 'The maximum value for this field is %1%.',
-        min: 'The minimum value for this field is %1%.',
-        date: 'This should be a valid date field.',
-        pattern: 'This is an incorrect pattern.'
-    };
-
     return {
 
-        /**
-         * This method returns a label element, and if required adds the asteriks.
-         *
-         * @param {Object} configuration
-         * {
-		 *  label: {String}
-		 *  isRequired: {Boolean}
-		 * }
-         * @returns {Element}
-         */
-        getLabelElement: function (configuration) {
-
-            // Create the label element and add the label text.
-            var labelElement = document.createElement('label');
-            labelElement.setAttribute('class', 'control-label col-md-4');
-
-            if ('undefined' != typeof configuration.label) {
-                labelElement.appendChild(document.createTextNode(configuration.label));
-            }
-
-            return labelElement;
-        },
 
         /**
          * This method creates an input element wrapped inside a sizable container.
@@ -78,74 +46,45 @@ uiFormModule.factory('uiFormService', function(){
 		 *  pattern: {RegEx}
 		 * }
          */
-        getInputElement: function (name, ngModel, configuration) {
-
-            // Create input element.
-            var inputEditModeElement = document.createElement('input');
-            inputEditModeElement.setAttribute('type', configuration.type);
-            inputEditModeElement.setAttribute('name', name);
-            inputEditModeElement.setAttribute('class', 'form-control');
-
-            inputEditModeElement.setAttribute('placeholder', configuration.placeholder);
-            inputEditModeElement.setAttribute('data-ng-model', ngModel);
-            inputEditModeElement.setAttribute('data-ng-required', configuration.isRequired);
-
-            inputEditModeElement.setAttribute('data-uib-popover', '{{getErrorMessage(\'' + name + '\')}}');
-            inputEditModeElement.setAttribute('data-popover-placement', 'bottom');
-            inputEditModeElement.setAttribute('data-popover-trigger', 'focus');
-            inputEditModeElement.setAttribute('data-popover-enable', '{{getEditMode()}}');
+        setValidationRules: function (element, configuration) {
 
             // Decorate element with validation rules, requirement.
             if (true == configuration.isRequired) {
 
-                addIsRequiredValidation(inputEditModeElement);
+                addIsRequiredValidation(element);
             }
 
             // Decorate element validation rules, minlength.
             if ('undefined' != typeof configuration.minlength && configuration.minlength > 0) {
 
-                addMinLengthValidation(inputEditModeElement, configuration.minlength);
+                addMinLengthValidation(element, configuration.minlength);
             }
 
             // Decorate element validation rules, maxlength.
             if ('undefined' != typeof configuration.maxlength && configuration.maxlength > 0) {
 
-                addMaxLengthValidation(inputEditModeElement, configuration.maxlength);
+                addMaxLengthValidation(element, configuration.maxlength);
             }
 
             // Decorate element validation rules, min value. For number and date types only.
             if ('undefined' != typeof configuration.min) {
 
-                addMinValueValidation(inputEditModeElement, configuration.min);
+                addMinValueValidation(element, configuration.min);
             }
 
             // Decorate element validation rules, max value. For number and date types only.
             if ('undefined' != typeof configuration.max) {
 
-                addMaxValueValidation(inputEditModeElement, configuration.max);
+                addMaxValueValidation(element, configuration.max);
             }
 
             // Decorate element validation rules, regex pattern.
             if (configuration.pattern) {
 
-                addPatternValidation(inputEditModeElement, configuration.pattern);
+                addPatternValidation(element, configuration.pattern);
             }
 
-            // Create view mode.
-            var inputViewModeElement = document.createElement('p');
-            inputViewModeElement.setAttribute('class', 'form-control-static');
-            inputViewModeElement.setAttribute('data-ng-bind', ngModel);
-
-
-            // Create wrapper.
-            var inputElementWrapper = document.createElement('div');
-            inputElementWrapper.setAttribute('class', 'col-md-8');
-
-            // Append both edit and view mode elements
-            inputElementWrapper.appendChild(inputEditModeElement);
-            inputElementWrapper.appendChild(inputViewModeElement);
-
-            return inputElementWrapper;
+            return element;
         },
 
         /**
@@ -156,7 +95,7 @@ uiFormModule.factory('uiFormService', function(){
          * @param formElementName {String}.
          * @returns {String}
          */
-        getMessages: function (field, formName, formElementName) {
+        getValidationMessages: function (field, formName, formElementName) {
 
             var message = '\u2714';
 
@@ -209,25 +148,6 @@ uiFormModule.factory('uiFormService', function(){
             }
 
             return message;
-        },
-
-        /**
-         * This method returns the state of edit mode.
-         *
-         * @param isEditable {Boolean}
-         * @returns {Boolean}
-         */
-        getEditMode: function (isEditable) {
-
-            // We are getting the param as String!
-            if ('undefined' == typeof(isEditable) || 'false' == isEditable) {
-
-                return false;
-            } else {
-
-                return true;
-            }
-
         }
     }
-});
+}]);
