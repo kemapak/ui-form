@@ -32,25 +32,6 @@
                             class="col-md-6">
         </ui-form-input-text>
       </div>
-      <!--<hr>-->
-      <!--<fieldset class="row" data-ng-repeat="item in ctrl.model.payload.hobbies">-->
-        <!--<legend>ctrl.model.metadata.hobbies.label</legend>-->
-        <!--<ui-form-input-checkbox element-name="sampleCheckbox"-->
-                            <!--data-ng-model="item.value"-->
-                            <!--data-label="item.label"-->
-                            <!--data-config="ctrl.model.metadata.hobbies">-->
-        <!--</ui-form-input-checkbox>-->
-      <!--</fieldset>-->
-      <!--<hr>-->
-      <!--<div class="row">-->
-        <!--&lt;!&ndash;<ui-form-input-checkbox element-name="sampleCheckbox2"&ndash;&gt;-->
-                                <!--&lt;!&ndash;data-ng-model="ctrl.model.payload.acceptLicenseAgreement.value"&ndash;&gt;-->
-                                <!--&lt;!&ndash;data-label="ctrl.model.payload.acceptLicenseAgreement.label"&ndash;&gt;-->
-                                <!--&lt;!&ndash;data-config="ctrl.model.metadata.acceptLicenseAgreement"&ndash;&gt;-->
-                                <!--&lt;!&ndash;class="col-md-6">&ndash;&gt;-->
-        <!--&lt;!&ndash;</ui-form-input-checkbox>&ndash;&gt;-->
-      <!--</div>-->
-      <!--<hr>-->
       <div class="row">
         <ui-form-input-text element-name="sampleNumber"
                             data-ng-model="ctrl.model.payload.age"
@@ -64,6 +45,24 @@
                             data-config="ctrl.model.metadata.birthDay"
                             class="col-md-6">
         </ui-form-input-text>
+      </div>
+      <!--<hr>-->
+      <!--<fieldset class="row" data-ng-repeat="item in ctrl.model.payload.hobbies">-->
+      <!--<legend>ctrl.model.metadata.hobbies.label</legend>-->
+      <!--<ui-form-input-checkbox element-name="sampleCheckbox"-->
+      <!--data-ng-model="item.value"-->
+      <!--data-label="item.label"-->
+      <!--data-config="ctrl.model.metadata.hobbies">-->
+      <!--</ui-form-input-checkbox>-->
+      <!--</fieldset>-->
+      <!--<hr>-->
+      <div class="row">
+        <ui-form-input-checkbox element-name="sampleCheckbox2"
+        data-ng-model="ctrl.model.payload.acceptLicenseAgreement.value"
+        data-label="ctrl.model.payload.acceptLicenseAgreement.label"
+        data-config="ctrl.model.metadata.acceptLicenseAgreement"
+        class="col-md-6">
+        </ui-form-input-checkbox>
       </div>
       <hr>
       <div class="row">

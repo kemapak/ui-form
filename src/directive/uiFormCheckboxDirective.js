@@ -1,4 +1,4 @@
-uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', function(uiFormService){
+uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidationService', function(uiFormService, uiFormValidationService){
 
     return {
         restrict: 'E',
@@ -12,19 +12,31 @@ uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', function(uiFormS
             config: '=',
             message: '@'
         },
-        template: '<div class="checkbox"></div>', // TODO add the checkbox-inline from config.
+        template: '<div class="form-group"></div>',
 
         link: function(scope, element, attrs, formController) {
 
-            var labelElement = uiFormService.getLabelElement({label: scope.label, isRequired: scope.config.isRequired});
-            element.append(labelElement);
+            //var labelElement = uiFormService.getLabel({label: scope.label, isRequired: scope.config.isRequired, gridSize: ''});
+            var labelElement = document.createElement('label');
+            //labelElement.setAttribute('class', 'control-label');
 
-            var checkboxElement = uiFormService.getInputElement(scope.elementName, scope.model, scope.config, formController[scope.editMode]);
-            element.append(checkboxElement);
+            var checkboxEditModeElement = uiFormService.getCheckbox(scope.elementName, attrs.ngModel, scope.config);
+            checkboxEditModeElement = uiFormValidationService.setValidationRules(checkboxEditModeElement, scope.config);
+            labelElement.appendChild(checkboxEditModeElement);
 
-            var ngElement = angular.element(checkboxElement.getElementsByTagName('input')[0]);
+            var checkboxViewModeElement = uiFormService.getCheckboxViewMode(attrs.ngModel);
+            labelElement.appendChild(checkboxViewModeElement);
 
-            scope.toggleErrorState = function(s) {
+            labelElement.appendChild(document.createTextNode(scope.label));
+
+            var checkboxWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout, gridSize: scope.config.gridSize});
+            checkboxWrapperElement.appendChild(labelElement);
+
+            element.append(checkboxWrapperElement);
+
+            var ngElement = angular.element(checkboxEditModeElement);
+
+            scope.toggleErrorState = function() {
 
                 if (formController[scope.elementName].$dirty && formController[scope.elementName].$invalid) {
                     element.addClass('has-error');

@@ -47,16 +47,14 @@ var uiFormApp = angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).co
 		hobbies: {
 			label: 'Hobbies',
 			type: 'checkbox',
-			labelGridSize: 'col-sm-4',
-			valueGridSize: 'col-sm-8',
+			gridSize: 'col-sm-offset-4 col-sm-8',
 			layout: 'horizontal',
 			isRequired: true
 		},
 		acceptLicenseAgreement: {
 			label: '',
 			type: 'checkbox',
-			labelGridSize: 'col-sm-4',
-			valueGridSize: 'col-sm-8',
+			gridSize: 'col-sm-offset-4 col-sm-8',
 			isRequired: true
 		}
 

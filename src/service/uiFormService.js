@@ -32,7 +32,7 @@ uiFormModule.factory('uiFormService', function(){
         element.setAttribute('data-popover-enable', '{{getEditMode()}}');
 
         return element;
-    }
+    };
 
     return {
 
@@ -43,7 +43,7 @@ uiFormModule.factory('uiFormService', function(){
          * {
 		 *  label: {String}
 		 *  isRequired: {Boolean}
-		 *  gridSize: {String} Grid size converted to boostrap units
+		 *  gridSize: {String} Grid size converted to boostrap units.
 		 * }
          * @returns {Element}
          */
@@ -111,44 +111,61 @@ uiFormModule.factory('uiFormService', function(){
 
         getTextarea: function (name, ngModel, configuration) {
 
-            var element = getFormElement(name, ngModel, configuration);
+            var element = _getFormElement(name, ngModel, configuration);
             element.setAttribute('class', 'form-control');
             element.setAttribute('placeholder', configuration.placeholder);
 
             return element;
         },
 
-        getTextareViewMode: function(ngModel) {
+        getTextareaViewMode: function(ngModel) {
             return this.getTextViewMode(ngModel);
         },
 
         getCheckbox: function (name, ngModel, configuration) {
 
-            var element = getFormElement(name, ngModel, configuration);
+            var element = _getFormElement(name, ngModel, configuration);
 
             return element;
         },
 
         getCheckboxViewMode: function(ngModel) {
 
-            return 'TODOcheckbox view mode';
+            var element = document.createElement('p');
+            element.setAttribute('class', 'form-control-static');
+            //element.setAttribute('data-ng-bind', ngModel);
+            element.setAttribute('data-ng-class', 'getCheckboxViewClass(' + ngModel + ')');
+            element.setAttribute('title', '{{' + ngModel + '}}');
+
+            return element;
+        },
+
+        getCheckboxViewClass: function(status) {
+
+            if ('undefined' == typeof status) {
+                status = false;
+            }
+            return  {
+                checked: status,
+                unchecked: !status
+            }
         },
 
         getRadio: function (name, ngModel, configuration) {
 
-            var element = getFormElement(name, ngModel, configuration);
+            var element = _getFormElement(name, ngModel, configuration);
 
             return element;
         },
 
         getRadioViewMode: function(ngModel) {
 
-            return 'TODO radio view mode';
+            return document.createTextNode('TODO radio view mode');
         },
 
         getSelect: function (name, ngModel, configuration) {
 
-            var element = getFormElement(name, ngModel, configuration);
+            var element = _getFormElement(name, ngModel, configuration);
 
             return element;
         },
@@ -174,7 +191,7 @@ uiFormModule.factory('uiFormService', function(){
                 case 'checkbox': {
 
                     typeClass = 'checkbox';
-                    if ((undefined !== typeof config.layout) && ('inline' == config.layout)) {
+                    if (('undefined' !== typeof wrapperConfiguration.layout) && ('inline' == wrapperConfiguration.layout)) {
                         typeClass += '-inline';
                     }
                     break;
@@ -182,7 +199,7 @@ uiFormModule.factory('uiFormService', function(){
                 case 'radio': {
 
                     typeClass = 'radio';
-                    if ((undefined !== typeof config.layout) && ('inline' == config.layout)) {
+                    if ((undefined !== typeof wrapperConfiguration.layout) && ('inline' == wrapperConfiguration.layout)) {
                         typeClass += '-inline';
                     }
                     break;
@@ -217,7 +234,6 @@ uiFormModule.factory('uiFormService', function(){
 
                 return true;
             }
-
         }
     }
 });

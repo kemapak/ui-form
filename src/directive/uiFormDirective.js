@@ -32,6 +32,11 @@ uiFormModule.directive('uiForm', ['uiFormService', 'uiFormValidationService', '$
                 return uiFormService.getEditMode(this.editMode);
             }
 
+            scope.getCheckboxViewClass = function(status) {
+
+                return uiFormService.getCheckboxViewClass(status);
+            }
+
             element.on('$destroy', function () {
                 // Nothing to do yet.
             });

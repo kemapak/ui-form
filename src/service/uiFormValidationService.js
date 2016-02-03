@@ -2,7 +2,7 @@ uiFormModule.factory('uiFormValidationService', ['$http', function($http){
 
     var _messages = {};
 
-    $http.get('src/validationMessages.bundle.JSON').then(function(response) {
+    $http.get('../src/validationMessages.bundle.JSON').then(function(response) {
         _messages = response.data;
     });
 

@@ -21,11 +21,8 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 
 			var inputEditModeElement = uiFormService.getText(scope.elementName, attrs.ngModel, scope.config);
 			inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config)
-			element.append(inputEditModeElement);
-
 
 			var inputViewModeElement = uiFormService.getTextViewMode(attrs.ngModel);
-			element.append(inputViewModeElement);
 
 			var inputWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout, gridSize: scope.config.valueGridSize});
 			inputWrapperElement.appendChild(inputEditModeElement);
