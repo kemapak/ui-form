@@ -16,7 +16,7 @@
     <header>
       <h1>Angular form element directives</h1>
     </header>
-    <ui-form name="sampleForm" class="form-horizontal" data-edit-mode="{{ctrl.model.editMode}}" data-parent-controller="ctrl"
+    <ui-form name="sampleForm" class="form-horizontal" data-edit-mode="{{ctrl.model.editMode}}"
              data-ng-submit="ctrl.submitHandler()">
       <div class="row">
         <ui-form-input-text element-name="sampleText"
@@ -46,16 +46,19 @@
                             class="col-md-6">
         </ui-form-input-text>
       </div>
-      <!--<hr>-->
-      <!--<fieldset class="row" data-ng-repeat="item in ctrl.model.payload.hobbies">-->
-      <!--<legend>ctrl.model.metadata.hobbies.label</legend>-->
-      <!--<ui-form-input-checkbox element-name="sampleCheckbox"-->
-      <!--data-ng-model="item.value"-->
-      <!--data-label="item.label"-->
-      <!--data-config="ctrl.model.metadata.hobbies">-->
-      <!--</ui-form-input-checkbox>-->
-      <!--</fieldset>-->
-      <!--<hr>-->
+      <!--<div class="row">-->
+        <!--<div class="col-md-6">-->
+          <!--<ui-form-fieldset data-legend="ctrl.model.metadata.hobbies.label" class="col-sm-offset-4" >-->
+            <!--<div data-ng-repeat="item in ctrl.model.payload.hobbies">-->
+              <!--<ui-form-input-checkbox element-name="sampleCheckbox"-->
+                                      <!--data-ng-model="item.value"-->
+                                      <!--data-label="item.label"-->
+                                      <!--data-config="ctrl.model.metadata.hobbies">-->
+              <!--</ui-form-input-checkbox>-->
+            <!--</div>-->
+          <!--</ui-form-fieldset>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="row">
         <ui-form-input-checkbox element-name="sampleCheckbox2"
         data-ng-model="ctrl.model.payload.acceptLicenseAgreement.value"
@@ -81,6 +84,7 @@
 <script src="../src/uiFormModule.js"></script>
 <script src="../src/service/uiFormValidationService.js"></script>
 <script src="../src/service/uiFormService.js"></script>
+<script src="../src/directive/uiFormFieldsetDirective.js"></script>
 <script src="../src/directive/uiFormDirective.js"></script>
 <script src="../src/directive/uiFormInputTextDirective.js"></script>
 <script src="../src/directive/uiFormCheckboxDirective.js"></script>

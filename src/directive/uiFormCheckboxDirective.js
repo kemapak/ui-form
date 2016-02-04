@@ -2,7 +2,7 @@ uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidatio
 
     return {
         restrict: 'E',
-        transclude: true,
+        transclude: false,
         replace: true,
         require: '^form',
         scope: {
@@ -24,13 +24,14 @@ uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidatio
             checkboxEditModeElement = uiFormValidationService.setValidationRules(checkboxEditModeElement, scope.config);
             labelElement.appendChild(checkboxEditModeElement);
 
-            var checkboxViewModeElement = uiFormService.getCheckboxViewMode(attrs.ngModel);
-            labelElement.appendChild(checkboxViewModeElement);
-
             labelElement.appendChild(document.createTextNode(scope.label));
+
+            var checkboxViewModeElement = uiFormService.getCheckboxViewMode(scope.label, attrs.ngModel);
 
             var checkboxWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout, gridSize: scope.config.gridSize});
             checkboxWrapperElement.appendChild(labelElement);
+            checkboxWrapperElement.appendChild(checkboxViewModeElement);
+
 
             element.append(checkboxWrapperElement);
 

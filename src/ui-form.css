@@ -12,10 +12,31 @@
     padding-left: 3px;
 }
 
+/* Override the fieldset and legend tag of Bootstrap. */
+.ui-form fieldset {
+
+    border: 1px solid #c0c0c0;
+    /*border-top: 3px solid #c0c0c0;*/
+    /*border-bottom: 3px solid #c0c0c0;*/
+    border-radius: 4px;
+    /*margin: 15px;*/
+}
+
+.ui-form fieldset legend {
+
+    padding-left: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    width:inherit;
+    border: none;
+}
+
 /* Edit mode. Show form fields, required * and hide static fields. */
 .ui-form[data-edit-mode="true"] div.form-group .form-control,
-.ui-form[data-edit-mode="false"] div.form-group input[type="checkbox"],
-.ui-form[data-edit-mode="false"] div.form-group input[type="radio"],
+.ui-form[data-edit-mode="false"] div.form-group div.checkbox label,
+.ui-form[data-edit-mode="false"] div.form-group div.checkbox-inline label,
+.ui-form[data-edit-mode="false"] div.form-group div.radio label,
+.ui-form[data-edit-mode="false"] div.form-group div.radio-inline label,
 .ui-form[data-edit-mode="false"] div.form-group textarea,
 .ui-form[data-edit-mode="false"] div.form-group select {
 
@@ -34,8 +55,10 @@
 
 /* View mode. Hide form fields, reuired * and show static fields. */
 .ui-form[data-edit-mode="false"] div.form-group .form-control,
-.ui-form[data-edit-mode="false"] div.form-group input[type="checkbox"],
-.ui-form[data-edit-mode="false"] div.form-group input[type="radio"],
+.ui-form[data-edit-mode="false"] div.form-group div.checkbox label,
+.ui-form[data-edit-mode="false"] div.form-group div.checkbox-inline label,
+.ui-form[data-edit-mode="false"] div.form-group div.radio label,
+.ui-form[data-edit-mode="false"] div.form-group div.radio-inline label,
 .ui-form[data-edit-mode="false"] div.form-group textarea,
 .ui-form[data-edit-mode="false"] div.form-group select {
 
@@ -67,19 +90,7 @@
     overflow: hidden;
 }
 
-/* View mode classes for checkbox. */
-.checked:after {
-
-    content: "+";
-    color: green;
-}
-.unchecked:after {
-
-    content: "-";
-    color: red;
-}
-
-     /* Required field style for input elements. Uncomment if you want to use borders for required fields */
+/* Required field style for input elements. Uncomment if you want to use borders for required fields */
 /*.ui-form div.form-group input.form-control[data-ng-required="true"],*/
 /*.ui-form div.form-group textarea.form-control[data-ng-required="true"],*/
 /*.ui-form div.form-group select.form-control[data-ng-required="true"] {*/

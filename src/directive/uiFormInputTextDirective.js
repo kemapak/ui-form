@@ -2,9 +2,9 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 
 	return {
 		restrict: 'E',
-		transclude: true,
+		transclude: false,
 		replace: true,
-		require: '^form',
+		require: '^uiForm',
 		scope: {
 			elementName: '@',
 			model: '=ngModel',

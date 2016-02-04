@@ -4,6 +4,7 @@ uiFormModule.directive('uiForm', ['uiFormService', 'uiFormValidationService', '$
         restrict: 'E',
         transclude: true,
         replace: true,
+        controller: function(){},
 
         template: '<ng-form novalidate data-ng-transclude></ng-form>',
 

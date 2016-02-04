@@ -129,26 +129,28 @@ uiFormModule.factory('uiFormService', function(){
             return element;
         },
 
-        getCheckboxViewMode: function(ngModel) {
+        getCheckboxViewMode: function(label, ngModel) {
 
             var element = document.createElement('p');
             element.setAttribute('class', 'form-control-static');
-            //element.setAttribute('data-ng-bind', ngModel);
-            element.setAttribute('data-ng-class', 'getCheckboxViewClass(' + ngModel + ')');
+            element.appendChild(document.createTextNode(label));
             element.setAttribute('title', '{{' + ngModel + '}}');
+
+            element.setAttribute('data-ng-class', 'getCheckboxViewClass(' + ngModel + ')');
 
             return element;
         },
 
         getCheckboxViewClass: function(status) {
 
-            if ('undefined' == typeof status) {
-                status = false;
+            var cssClass = '';
+
+            if (!status) {
+
+                cssClass = 'hide';
             }
-            return  {
-                checked: status,
-                unchecked: !status
-            }
+
+            return cssClass;
         },
 
         getRadio: function (name, ngModel, configuration) {
