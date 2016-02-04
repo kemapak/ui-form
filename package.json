@@ -1,20 +1,28 @@
 {
   "name": "ui-form",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "description": "Angular and Bootstrap form and form elements with all the bells and whistles.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kemapak/ui-form.git"
+  },
+  "homepage": "https://github.com/kemapak/ui-form",
+  "license": "MIT",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-watch": "~0.4.0",
-    "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-copy": ">=0.4.0",
-    "grunt-contrib-concat": ">=0.4.0",
-    "grunt-contrib-uglify": ">=0.4.0",
-    "grunt-contrib-cssmin": ">=0.4.0",
-    "grunt-contrib-imagemin": ">=0.4.0",
-    "grunt-contrib-htmlmin": ">=0.4.0",
-    "grunt-contrib-jslint": "~0.4.5",
-    "grunt-contrib-csslint": ">=0.4.0",
-    "grunt-contrib-jasmine": "~0.4.0",
-    "grunt-ngdocs": "0.4.x",
-    "grunt-karma": "0.4.x"
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-cache": "^0.4.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.0.6",
+    "gulp-uglify": "^1.5.1",
+    "jshint": "^2.9.1",
+    "stream-combiner2": "^1.1.1"
   }
 }

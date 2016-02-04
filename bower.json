@@ -1,8 +1,15 @@
 {
   "name": "ui-form",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Angular and Bootstrap form and form elements with all the bells and whistles.",
   "license": "MIT",
+  "main": [
+    "dist/uiForm.js",
+    "dist/uiForm.min.js",
+    "dist/ui-form.css",
+    "dist/ui-form.min.css",
+    "dist/validationMessages.bundle.json"
+  ],
   "ignore": [
     "node_modules",
     "bower_components",
@@ -18,6 +25,6 @@
   },
   "homepage": "https://github.com/kemapak/ui-form",
   "authors": [
-    "kemapak"
+    "kemapak <kem@softwarenotes.net">
   ]
 }
