@@ -17,9 +17,7 @@
   "license": "MIT",
   "main": [
     "dist/uiForm.js",
-    "dist/uiForm.min.js",
     "dist/ui-form.css",
-    "dist/ui-form.min.css",
     "dist/validationMessages.bundle.json"
   ],
   "ignore": [
@@ -35,7 +33,11 @@
     "angular-bootstrap": "1.1.1"
   },
   "homepage": "https://github.com/kemapak/ui-form",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kemapak/ui-form.git"
+  },
   "authors": [
-    "kemapak <kem@softwarenotes.net>"
+    { "name": "Kem Apak", "email": "kem@softwarenotes.net", "homepage": "http://www.softwarenotes.net" }
   ]
 }
