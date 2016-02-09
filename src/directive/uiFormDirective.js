@@ -42,7 +42,7 @@ uiFormModule.directive('uiForm', ['uiFormService', 'uiFormValidationService', '$
                 // Nothing to do yet.
             });
 
-            $compile(element.contents())(scope);
+            //$compile(element.contents())(scope);
         }
     }
 }]);

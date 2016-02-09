@@ -33,12 +33,12 @@
 
 /* Edit mode. Show form fields, required * and hide static fields. */
 .ui-form[data-edit-mode="true"] div.form-group .form-control,
-.ui-form[data-edit-mode="false"] div.form-group div.checkbox label,
-.ui-form[data-edit-mode="false"] div.form-group div.checkbox-inline label,
-.ui-form[data-edit-mode="false"] div.form-group div.radio label,
-.ui-form[data-edit-mode="false"] div.form-group div.radio-inline label,
-.ui-form[data-edit-mode="false"] div.form-group textarea,
-.ui-form[data-edit-mode="false"] div.form-group select {
+.ui-form[data-edit-mode="true"] div.form-group div.checkbox label,
+.ui-form[data-edit-mode="true"] div.form-group div.checkbox-inline label,
+.ui-form[data-edit-mode="true"] div.form-group div.radio label,
+.ui-form[data-edit-mode="true"] div.form-group div.radio-inline label,
+.ui-form[data-edit-mode="true"] div.form-group textarea,
+.ui-form[data-edit-mode="true"] div.form-group select {
 
     display: block;
 }

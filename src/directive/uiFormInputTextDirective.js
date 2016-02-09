@@ -1,4 +1,4 @@
-uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationService', function(uiFormService, uiFormValidationService){
+uiFormModule.directive('uiFormInputText', ['$compile', 'uiFormService', 'uiFormValidationService', function($compile, uiFormService, uiFormValidationService){
 
 	return {
 		restrict: 'E',
@@ -7,7 +7,6 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 		require: '^form',
 		scope: {
 			elementName: '@',
-			model: '=ngModel',
 			label: '=',
 			config: '=',
 			message: '@'
@@ -20,7 +19,7 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 			element.append(labelElement);
 
 			var inputEditModeElement = uiFormService.getText(scope.elementName, attrs.ngModel, scope.config);
-			inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config)
+			inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config);
 
 			var inputViewModeElement = uiFormService.getTextViewMode(attrs.ngModel);
 
@@ -44,6 +43,8 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 
 				scope.toggleErrorState();
 			});
+
+            $compile(element.contents())(scope.$parent);
 		}
 	};
 

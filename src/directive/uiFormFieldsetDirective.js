@@ -4,7 +4,7 @@ uiFormModule.directive('uiFormFieldset', [function(){
         restrict: 'E',
         transclude: true,
         replace: true,
-        require: '^uiForm',
+        require: '^form',
         template: '<fieldset data-ng-transclude></fieldset>',
 
         link: function(scope, element, attrs) {
@@ -12,7 +12,7 @@ uiFormModule.directive('uiFormFieldset', [function(){
             if ('undefined' != attrs.legend) {
 
                 var legendElement = document.createElement('legend');
-                legendElement.setAttribute('data-ng-bind', attrs.legend);
+                legendElement.appendChild(document.createTextNode(attrs.legend));
 
                 element.append(legendElement);
             }

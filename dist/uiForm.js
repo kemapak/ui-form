@@ -1,6 +1,6 @@
 uiFormModule = angular.module('uiFormModule', []);
 
-uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidationService', function(uiFormService, uiFormValidationService){
+uiFormModule.directive('uiFormInputCheckbox', ['$compile', 'uiFormService', 'uiFormValidationService', function($compile, uiFormService, uiFormValidationService){
 
     return {
         restrict: 'E',
@@ -9,7 +9,6 @@ uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidatio
         require: '^form',
         scope: {
             elementName: '@',
-            model: '=ngModel',
             label: '=',
             config: '=',
             message: '@'
@@ -18,9 +17,7 @@ uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidatio
 
         link: function(scope, element, attrs, formController) {
 
-            //var labelElement = uiFormService.getLabel({label: scope.label, isRequired: scope.config.isRequired, gridSize: ''});
             var labelElement = document.createElement('label');
-            //labelElement.setAttribute('class', 'control-label');
 
             var checkboxEditModeElement = uiFormService.getCheckbox(scope.elementName, attrs.ngModel, scope.config);
             checkboxEditModeElement = uiFormValidationService.setValidationRules(checkboxEditModeElement, scope.config);
@@ -33,7 +30,6 @@ uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidatio
             var checkboxWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout, gridSize: scope.config.gridSize});
             checkboxWrapperElement.appendChild(labelElement);
             checkboxWrapperElement.appendChild(checkboxViewModeElement);
-
 
             element.append(checkboxWrapperElement);
 
@@ -52,6 +48,8 @@ uiFormModule.directive('uiFormInputCheckbox', ['uiFormService', 'uiFormValidatio
 
                 scope.toggleErrorState();
             });
+
+            $compile(element.contents())(scope.$parent);
         }
     };
 
@@ -101,7 +99,7 @@ uiFormModule.directive('uiForm', ['uiFormService', 'uiFormValidationService', '$
                 // Nothing to do yet.
             });
 
-            $compile(element.contents())(scope);
+            //$compile(element.contents())(scope);
         }
     }
 }]);
@@ -112,7 +110,7 @@ uiFormModule.directive('uiFormFieldset', [function(){
         restrict: 'E',
         transclude: true,
         replace: true,
-        require: '^uiForm',
+        require: '^form',
         template: '<fieldset data-ng-transclude></fieldset>',
 
         link: function(scope, element, attrs) {
@@ -120,7 +118,7 @@ uiFormModule.directive('uiFormFieldset', [function(){
             if ('undefined' != attrs.legend) {
 
                 var legendElement = document.createElement('legend');
-                legendElement.setAttribute('data-ng-bind', attrs.legend);
+                legendElement.appendChild(document.createTextNode(attrs.legend));
 
                 element.append(legendElement);
             }
@@ -129,7 +127,7 @@ uiFormModule.directive('uiFormFieldset', [function(){
 
 }]);
 
-uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationService', function(uiFormService, uiFormValidationService){
+uiFormModule.directive('uiFormInputText', ['$compile', 'uiFormService', 'uiFormValidationService', function($compile, uiFormService, uiFormValidationService){
 
 	return {
 		restrict: 'E',
@@ -138,7 +136,6 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 		require: '^form',
 		scope: {
 			elementName: '@',
-			model: '=ngModel',
 			label: '=',
 			config: '=',
 			message: '@'
@@ -151,7 +148,7 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 			element.append(labelElement);
 
 			var inputEditModeElement = uiFormService.getText(scope.elementName, attrs.ngModel, scope.config);
-			inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config)
+			inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config);
 
 			var inputViewModeElement = uiFormService.getTextViewMode(attrs.ngModel);
 
@@ -175,6 +172,8 @@ uiFormModule.directive('uiFormInputText', ['uiFormService', 'uiFormValidationSer
 
 				scope.toggleErrorState();
 			});
+
+            $compile(element.contents())(scope.$parent);
 		}
 	};
 
