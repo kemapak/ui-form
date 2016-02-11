@@ -16,10 +16,8 @@
 .ui-form fieldset {
 
     border: 1px solid #c0c0c0;
-    /*border-top: 3px solid #c0c0c0;*/
-    /*border-bottom: 3px solid #c0c0c0;*/
     border-radius: 4px;
-    /*margin: 15px;*/
+    margin-bottom:15px;
 }
 
 .ui-form fieldset legend {
@@ -67,21 +65,29 @@
 
 .ui-form[data-edit-mode="false"] div.form-group label[data-ng-required="true"] sup {
 
-    display: none;
+    visibility: hidden;
+}
+
+.ui-form div.form-group input[type="checkbox"],
+.ui-form div.form-group input[type="radio"] {
+    transform: scale(1.5);
 }
 
 .ui-form[data-edit-mode="false"] div.form-group p.form-control-static {
 
     display: block;
+    padding: 6px 12px;
+    background-color: #CCCCCC;
 }
 
 /* View mode show fields are editable implicitly. */
 .ui-form[data-edit-mode="false"] div.form-group p.form-control-static {
-    border: 1px dashed transparent;
+    border: 2px solid transparent;
+    border-radius: 4px;
 }
 
 .ui-form[data-edit-mode="false"] div.form-group p.form-control-static:hover {
-    border: 1px dashed grey;
+    border: 2px solid #2AABD2;
 }
 
 /* Handle the text overflow in the view mode. */

@@ -1,3 +1,6 @@
+// Disable gulp notifier.
+process.env.DISABLE_NOTIFIER = true;
+
 var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
@@ -19,11 +22,10 @@ gulp.task('clean', function () {
     ]);
 });
 
-gulp.task('message bundle', function() {
-    return gulp.src('src/*.bundle.json')
-        .pipe(gulp.dest('dist/'))
-        .pipe(gulp.dest('example/'))
-        .pipe(notify({ message: 'Messages task complete' }));
+gulp.task('cleanLib', function () {
+    return del([
+        'lib/**/*'
+    ]);
 });
 
 gulp.task('script', function() {
@@ -48,17 +50,11 @@ gulp.task('style', function() {
 
 gulp.task('watch', function() {
 
-    // Watch bundle.json files
-    gulp.watch('src/**/*.bundle.json', ['message bundle']);
-
     // Watch .css files
     gulp.watch('src/**/*.css', ['style']);
 
     // Watch .js files
     gulp.watch('src/**/*.js', ['script']);
-
-    // Watch image files
-    //gulp.watch('src/asset/**/*', ['images']);
 });
 
-gulp.task('default', ['clean', 'message bundle', 'script', 'style']);
+gulp.task('default', ['clean', 'script', 'style']);

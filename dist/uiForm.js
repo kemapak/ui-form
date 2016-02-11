@@ -8,26 +8,65 @@ uiFormModule.directive('uiFormInputCheckbox', ['$compile', 'uiFormService', 'uiF
         replace: true,
         require: '^form',
         scope: {
-            elementName: '@',
-            label: '=',
-            config: '=',
-            message: '@'
+            elementName: '@?',
+            label: '=?',
+            config: '=?',
+            flush: '=?'
         },
         template: '<div class="form-group"></div>',
 
         link: function(scope, element, attrs, formController) {
 
+            if ('undefined' ==  typeof scope.config) {
+                scope.config = {};
+            }
+
+            if ('undefined' ==  typeof scope.config.type) {
+                scope.config.type = 'text';
+            }
+
+            if ('undefined' ==  typeof scope.config.isRequired) {
+                scope.config.isRequired = false;
+            }
+
+            if ('undefined' == typeof scope.elementName) {
+                scope.elementName = 'elementName_' + Math.random(new Data().getMilliseconds());
+            }
+
+            if ('undefined' == typeof scope.flush) {
+
+                scope.flush = false;
+            }
+
+            if ('undefined' == typeof scope.label) {
+
+               scope.label = '';
+            }
+
             var labelElement = document.createElement('label');
 
-            var checkboxEditModeElement = uiFormService.getCheckbox(scope.elementName, attrs.ngModel, scope.config);
+            var checkboxEditModeElement = uiFormService.getCheckbox({
+                name: scope.elementName,
+                ngModel: attrs.ngModel});
             checkboxEditModeElement = uiFormValidationService.setValidationRules(checkboxEditModeElement, scope.config);
+            checkboxEditModeElement = uiFormValidationService.setErrorPopover(checkboxEditModeElement);
             labelElement.appendChild(checkboxEditModeElement);
 
             labelElement.appendChild(document.createTextNode(scope.label));
 
-            var checkboxViewModeElement = uiFormService.getCheckboxViewMode(scope.label, attrs.ngModel);
+            var checkboxViewModeElement = uiFormService.getCheckboxViewMode({label: scope.label, ngModel: attrs.ngModel});
 
-            var checkboxWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout, gridSize: scope.config.gridSize});
+            var checkboxWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout});
+
+            var elementGridSize = ' col-sm-offset-4 col-sm-8';
+
+            if (true == scope.flush) {
+
+                elementGridSize = ' col-sm-12';
+            }
+
+            checkboxWrapperElement.setAttribute('class', checkboxWrapperElement.getAttribute('class') + elementGridSize);
+
             checkboxWrapperElement.appendChild(labelElement);
             checkboxWrapperElement.appendChild(checkboxViewModeElement);
 
@@ -35,19 +74,20 @@ uiFormModule.directive('uiFormInputCheckbox', ['$compile', 'uiFormService', 'uiF
 
             var ngElement = angular.element(checkboxEditModeElement);
 
-            scope.toggleErrorState = function() {
-
-                if (formController[scope.elementName].$dirty && formController[scope.elementName].$invalid) {
-                    element.addClass('has-error');
-                } else {
-                    element.removeClass('has-error');
-                }
-            }
-
-            ngElement.bind('keyup', function() {
-
-                scope.toggleErrorState();
-            });
+            // TODO error state is very funky in checkboxes. Try to find a workaround.
+            //scope.toggleErrorState = function() {
+            //
+            //    if (formController[scope.elementName].$dirty && formController[scope.elementName].$invalid) {
+            //        element.addClass('has-error');
+            //    } else {
+            //        element.removeClass('has-error');
+            //    }
+            //}
+            //
+            //ngElement.bind('blur, click', function() {
+            //
+            //    scope.toggleErrorState();
+            //});
 
             $compile(element.contents())(scope.$parent);
         }
@@ -81,8 +121,8 @@ uiFormModule.directive('uiForm', ['uiFormService', 'uiFormValidationService', '$
 
                 var field = this[this.formName][formElementName];
 
-
                 return uiFormValidationService.getValidationMessages(field, this.formName, formElementName);
+
             }
 
             scope.getEditMode = function() {
@@ -135,26 +175,65 @@ uiFormModule.directive('uiFormInputText', ['$compile', 'uiFormService', 'uiFormV
 		replace: true,
 		require: '^form',
 		scope: {
-			elementName: '@',
-			label: '=',
-			config: '=',
-			message: '@'
+			elementName: '@?',
+			label: '=?',
+			config: '=?',
+            flush: '=?'
 		},
 		template: '<div class="form-group"></div>',
 
 		link: function(scope, element, attrs, formController) {
 
-			var labelElement = uiFormService.getLabel({label: scope.label, isRequired: scope.config.isRequired, gridSize: scope.config.labelGridSize});
-			element.append(labelElement);
+			if ('undefined' ==  typeof scope.config) {
+                scope.config = {};
+			}
 
-			var inputEditModeElement = uiFormService.getText(scope.elementName, attrs.ngModel, scope.config);
-			inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config);
+            if ('undefined' ==  typeof scope.config.type) {
+                scope.config.type = 'text';
+            }
 
-			var inputViewModeElement = uiFormService.getTextViewMode(attrs.ngModel);
+            if ('undefined' ==  typeof scope.config.isRequired) {
+                scope.config.isRequired = false;
+            }
 
-			var inputWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout, gridSize: scope.config.valueGridSize});
+			if ('undefined' == typeof scope.elementName) {
+				scope.elementName = 'elementName_' + Math.random(new Data().getMilliseconds());
+			}
+
+            if ('undefined' == typeof scope.flush) {
+
+                scope.flush = false;
+            }
+
+            if (false == scope.flush && 'undefined' != typeof scope.label) {
+
+                var labelElement = uiFormService.getLabel({label: scope.label, isRequired: scope.config.isRequired});
+                element.append(labelElement);
+            }
+
+			var inputEditModeElement = uiFormService.getText({
+                name: scope.elementName,
+                type: scope.config.type,
+                placeholder: scope.config.placeholder,
+                ngModel: attrs.ngModel});
+            inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config);
+            inputEditModeElement = uiFormValidationService.setErrorPopover(inputEditModeElement);
+
+
+            var inputViewModeElement = uiFormService.getTextViewMode(attrs.ngModel);
+
+			var inputWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout});
 			inputWrapperElement.appendChild(inputEditModeElement);
 			inputWrapperElement.appendChild(inputViewModeElement);
+
+            var elementGridSize = ' col-sm-8';
+
+            if (true == scope.flush || 'undefined' == typeof scope.label) {
+
+                elementGridSize = ' col-sm-12';
+            }
+            inputWrapperElement.setAttribute('class', inputWrapperElement.getAttribute('class') + elementGridSize);
+
 			element.append(inputWrapperElement);
 
 			var ngElement = angular.element(inputEditModeElement);
@@ -179,38 +258,35 @@ uiFormModule.directive('uiFormInputText', ['$compile', 'uiFormService', 'uiFormV
 
 }]);
 
-uiFormModule.factory('uiFormService', function(){
+uiFormModule.factory('uiFormService', ['$parse', function($parse){
+
+    /**
+     * Supported input "text" types (checkbox and radio are different directives).
+     *
+     * @type {string[]}
+     * @private
+     */
+    _supportedInputTextTypes = ['text', 'password', 'hidden', 'email', 'number', 'date'];
 
     /**
      * This method creates an input element wrapped inside a sizable container.
      *
-     * @param {Object} configuration
-     * {
-     *  name: {String}
-     *  type: {String} Supports, text, hidden, password, email, url // TODO Convert to enum.
-     *  isReuired: {Boolean}
-     *  minlength: {Number}
-     *  maxlength: {Number}
-     *  pattern: {RegEx}
-     * }
+     * @private
      */
-    _getFormElement = function (name, ngModel, configuration) {
+    _getFormElement = function(type) {
 
-        // Create input element.
+        // Create input element by default. This will the most used option.
         var element = document.createElement('input');
-        element.setAttribute('type', configuration.type);
-        element.setAttribute('name', name);
-        element.setAttribute('data-ng-model', ngModel);
 
-        return element;
-    };
-
-    _setErrorPopover = function(name, element) {
-
-        element.setAttribute('data-uib-popover', '{{getErrorMessage(\'' + name + '\')}}');
-        element.setAttribute('data-popover-placement', 'bottom');
-        element.setAttribute('data-popover-trigger', 'focus');
-        element.setAttribute('data-popover-enable', '{{getEditMode()}}');
+        switch (type) {
+            case 'textarea':
+                element = document.createElement('textarea');
+            case 'select':
+                element = document.createElement('select');
+            default:
+                element.setAttribute('type', type);
+                break;
+        }
 
         return element;
     };
@@ -233,12 +309,7 @@ uiFormModule.factory('uiFormService', function(){
             // Create the label element and add the label text.
             var labelElement = document.createElement('label');
 
-            var cssClass = 'control-label';
-
-            if ('undefined' != typeof labelConfiguration.gridSize) {
-
-                cssClass += ' ' + labelConfiguration.gridSize;
-            }
+            var cssClass = 'control-label col-sm-4';
 
             labelElement.setAttribute('class', cssClass);
 
@@ -267,15 +338,28 @@ uiFormModule.factory('uiFormService', function(){
             return labelElement;
         },
 
-        getText: function (name, ngModel, configuration) {
+        /**
+         *
+         * @param {Object} configuration
+         * {
+         *  name: {String} Element name for validation, etc.
+         *  type: {String) Input type, for example: "text", "email", etc.
+         *  placeholder: {String} Placeholder text.
+         *  ngModel: {Object} ngModel.
+         * }
+         * @returns {DOMElement}
+         */
+        getText: function (configuration) {
 
-            var element = _getFormElement(name, ngModel, configuration);
+            var element = _getFormElement(configuration.type);
+
+            element.setAttribute('name', configuration.name);
+            element.setAttribute('data-ng-model', configuration.ngModel);
+
             element.setAttribute('class', 'form-control');
-            if ('undefined != typeof configuration.placeholder') {
+            if ('undefined' != typeof configuration.placeholder) {
                 element.setAttribute('placeholder', configuration.placeholder);
             }
-
-            element = _setErrorPopover(name, element);
 
             return element;
         },
@@ -290,11 +374,28 @@ uiFormModule.factory('uiFormService', function(){
             return element;
         },
 
-        getTextarea: function (name, ngModel, configuration) {
+        /**
+         *
+         * @param {Object} configuration
+         * {
+         *  name: {String} Element name for validation, etc.,
+         *  placeholder: {String} Placeholder text.,
+         *  ngModel: {Object} ngModel.
+         * }
+         * @returns {DOMElement}
+         */
+        getTextarea: function (configuration) {
 
-            var element = _getFormElement(name, ngModel, configuration);
+            var element = _getFormElement('textarea');
+
+            element.setAttribute('data-ng-model', configuration.ngModel);
+
             element.setAttribute('class', 'form-control');
-            element.setAttribute('placeholder', configuration.placeholder);
+            if ('undefined != typeof configuration.placeholder') {
+                element.setAttribute('placeholder', configuration.placeholder);
+            }
+
+            element = _setErrorPopover(configuration.name, element);
 
             return element;
         },
@@ -303,21 +404,42 @@ uiFormModule.factory('uiFormService', function(){
             return this.getTextViewMode(ngModel);
         },
 
-        getCheckbox: function (name, ngModel, configuration) {
+        /**
+         *
+         * @param {Object} configuration
+         * {
+         *  name: {String} Element name for validation, etc.
+         *  ngModel: {String} ngModel.
+         * }
+         * @returns {DOMElement}
+         */
+        getCheckbox: function (configuration) {
 
-            var element = _getFormElement(name, ngModel, configuration);
+            var element = _getFormElement('checkbox');
+
+            element.setAttribute('name', configuration.name);
+            element.setAttribute('data-ng-model', configuration.ngModel);
 
             return element;
         },
 
-        getCheckboxViewMode: function(label, ngModel) {
+        /**
+         *
+         * @param configuration
+         * {
+         *  label: {String}
+         *  ngModel: {String} ngModel
+         * }
+         * @returns {Element}
+         */
+        getCheckboxViewMode: function(configuration) {
 
             var element = document.createElement('p');
             element.setAttribute('class', 'form-control-static');
-            element.appendChild(document.createTextNode(label));
-            element.setAttribute('title', '{{' + ngModel + '}}');
+            element.appendChild(document.createTextNode(configuration.label));
+            element.setAttribute('title', configuration.label);
 
-            element.setAttribute('data-ng-class', 'getCheckboxViewClass(' + ngModel + ')');
+            element.setAttribute('data-ng-class', 'getCheckboxViewClass(' + configuration.ngModel + ')');
 
             return element;
         },
@@ -396,7 +518,7 @@ uiFormModule.factory('uiFormService', function(){
             }
 
             // For input, textarea, select use bootstrap 'form-group'
-            element.setAttribute('class', typeClass + ' ' + wrapperConfiguration.gridSize);
+            element.setAttribute('class', typeClass);
 
             return element;
         },
@@ -419,15 +541,11 @@ uiFormModule.factory('uiFormService', function(){
             }
         }
     }
-});
+}]);
 
-uiFormModule.factory('uiFormValidationService', ['$http', function($http){
+uiFormModule.factory('uiFormValidationService', ['validationMessages', function(validationMessages){
 
-    var _messages = {};
-
-    $http.get('validationMessages.bundle.json').then(function(response) {
-        _messages = response.data;
-    });
+    var _messages = validationMessages;
 
     var addIsRequiredValidation = function(element) {
         element.setAttribute('data-ng-required', 'true');
@@ -510,6 +628,16 @@ uiFormModule.factory('uiFormValidationService', ['$http', function($http){
             return element;
         },
 
+        setErrorPopover: function(element) {
+
+            element.setAttribute('data-uib-popover', '{{getErrorMessage(\'' + element.getAttribute('name') + '\')}}');
+            element.setAttribute('data-popover-placement', 'bottom');
+            element.setAttribute('data-popover-trigger', 'focus');
+            element.setAttribute('data-popover-enable', '{{getEditMode()}}');
+
+            return element;
+        },
+
         /**
          * This method fecthes validation message depending on the fields client-side validation rules.
          *
@@ -574,3 +702,18 @@ uiFormModule.factory('uiFormValidationService', ['$http', function($http){
         }
     }
 }]);
+
+uiFormModule.value('validationMessages', {
+
+    "required": "This field is required.",
+    "number": "This field should be a numeric field.",
+    "integer": "This field should be an integer number.",
+    "float": "This field should be an float number.",
+    "date": "This should be a valid date field.",
+    "boolean": "Should be a boolean",
+    "minlength": "This field should be at least %1% characters.",
+    "maxlength": "This field should be at most %1% characters.",
+    "max": "The maximum value for this field is %1%.",
+    "min": "The minimum value for this field is %1%.",
+    "pattern": "This is an incorrect pattern."
+});

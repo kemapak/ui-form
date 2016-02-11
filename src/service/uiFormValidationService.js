@@ -1,10 +1,6 @@
-uiFormModule.factory('uiFormValidationService', ['$http', function($http){
+uiFormModule.factory('uiFormValidationService', ['validationMessages', function(validationMessages){
 
-    var _messages = {};
-
-    $http.get('validationMessages.bundle.json').then(function(response) {
-        _messages = response.data;
-    });
+    var _messages = validationMessages;
 
     var addIsRequiredValidation = function(element) {
         element.setAttribute('data-ng-required', 'true');
@@ -83,6 +79,16 @@ uiFormModule.factory('uiFormValidationService', ['$http', function($http){
 
                 addPatternValidation(element, configuration.pattern);
             }
+
+            return element;
+        },
+
+        setErrorPopover: function(element) {
+
+            element.setAttribute('data-uib-popover', '{{getErrorMessage(\'' + element.getAttribute('name') + '\')}}');
+            element.setAttribute('data-popover-placement', 'bottom');
+            element.setAttribute('data-popover-trigger', 'focus');
+            element.setAttribute('data-popover-enable', '{{getEditMode()}}');
 
             return element;
         },

@@ -24,8 +24,8 @@ uiFormModule.directive('uiForm', ['uiFormService', 'uiFormValidationService', '$
 
                 var field = this[this.formName][formElementName];
 
-
                 return uiFormValidationService.getValidationMessages(field, this.formName, formElementName);
+
             }
 
             scope.getEditMode = function() {

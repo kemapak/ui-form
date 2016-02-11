@@ -8,8 +8,6 @@ var uiFormApp = angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).co
 			label: 'First Name',
 			placeholder: 'Please enter your name',
 			type: 'text',
-			labelGridSize: 'col-sm-4',
-			valueGridSize: 'col-sm-8',
 			isRequired: false,
 			minlength: 2,
 			maxlength: 5,
@@ -19,8 +17,6 @@ var uiFormApp = angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).co
 			label: 'Last Name',
 			placeholder: 'Please enter your last name',
 			type: 'text',
-			labelGridSize: 'col-sm-4',
-			valueGridSize: 'col-sm-8',
 			isRequired: true,
 			minlength: 3,
 			maxlength: 6,
@@ -30,8 +26,6 @@ var uiFormApp = angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).co
 			label: 'Age',
 			placeholder: 'Please enter your age',
 			type: 'number',
-			labelGridSize: 'col-sm-4',
-			valueGridSize: 'col-sm-8',
 			isRequired: true,
 			max: 30
 		},
@@ -39,22 +33,17 @@ var uiFormApp = angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).co
 			label: 'Birth Day',
 			placeholder: 'Please enter your birth date',
 			type: 'date',
-			labelGridSize: 'col-sm-4',
-			valueGridSize: 'col-sm-8',
 			isRequired: true,
 			min: '2013-01-01'
 		},
 		hobbies: {
 			label: 'Hobbies',
 			type: 'checkbox',
-			gridSize: 'col-sm-offset-4 col-sm-8',
-			layout: 'horizontal',
-			isRequired: true
+			layout: 'horizontal'
 		},
 		acceptLicenseAgreement: {
 			label: '',
 			type: 'checkbox',
-			gridSize: 'col-sm-offset-4 col-sm-8',
 			isRequired: true
 		}
 
@@ -90,14 +79,33 @@ var uiFormApp = angular.module('uiFormApp', ['ui.bootstrap', 'uiFormModule']).co
 		],
 		acceptLicenseAgreement: {
 			label: 'Accept License Agreement',
-			value: true
+			value: true,
+			isRequired: true
 		}
-	}
+	};
+
+	var multiInputData = [
+		{
+			name: 'street',
+			label:'Street',
+			value: '123 One Street',
+			type: 'text',
+			isRequired: false
+		},
+		{
+			name: 'city',
+			label:'City',
+			value: 'San Francisco',
+			type: 'text',
+			isRequired: true
+		}
+	];
 
 	// The model should be fetched by a service in real life example.
 	_this.model = {
 		metadata: metadata,
 		payload: payload,
+		multiInputData: multiInputData,
 		editMode: true
 	};
 

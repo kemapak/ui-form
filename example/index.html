@@ -19,13 +19,14 @@
     <ui-form name="sampleForm" class="form-horizontal" data-edit-mode="{{ctrl.model.editMode}}"
              data-ng-submit="ctrl.submitHandler()">
       <div class="row">
-        <ui-form-input-text element-name="sampleText"
+        <ui-form-input-text data-element-name="sampleText"
                             data-ng-model="ctrl.model.payload.name"
                             data-label="ctrl.model.metadata.name.label"
                             data-config="ctrl.model.metadata.name"
+                            data-flush="true"
                             class="col-md-6">
         </ui-form-input-text>
-        <ui-form-input-text element-name="sampleText2"
+        <ui-form-input-text data-element-name="sampleText2"
                             data-ng-model="ctrl.model.payload.last"
                             data-label="ctrl.model.metadata.last.label"
                             data-config="ctrl.model.metadata.last"
@@ -33,13 +34,13 @@
         </ui-form-input-text>
       </div>
       <div class="row">
-        <ui-form-input-text element-name="sampleNumber"
+        <ui-form-input-text data-element-name="sampleNumber"
                             data-ng-model="ctrl.model.payload.age"
                             data-label="ctrl.model.metadata.age.label"
                             data-config="ctrl.model.metadata.age"
                             class="col-md-6">
         </ui-form-input-text>
-        <ui-form-input-text element-name="sampleDate"
+        <ui-form-input-text data-element-name="sampleDate"
                             data-ng-model="ctrl.model.payload.birthDay"
                             data-label="ctrl.model.metadata.birthDay.label"
                             data-config="ctrl.model.metadata.birthDay"
@@ -50,22 +51,36 @@
         <div class="col-md-6">
           <ui-form-fieldset data-legend="{{ctrl.model.metadata.hobbies.label}}" class="col-sm-offset-4" >
             <div data-ng-repeat="item in ctrl.model.payload.hobbies">
-              <ui-form-input-checkbox element-name="sampleCheckbox"
+              <ui-form-input-checkbox data-element-name="sampleCheckbox"
                                       data-ng-model="item.value"
                                       data-label="item.label"
-                                      data-config="ctrl.model.metadata.hobbies">
+                                      data-config="ctrl.model.metadata.hobbies"
+                                      class="col-sm-6">
               </ui-form-input-checkbox>
             </div>
           </ui-form-fieldset>
         </div>
       </div>
       <div class="row">
-        <ui-form-input-checkbox element-name="sampleCheckbox2"
-        data-ng-model="ctrl.model.payload.acceptLicenseAgreement.value"
-        data-label="ctrl.model.payload.acceptLicenseAgreement.label"
-        data-config="ctrl.model.metadata.acceptLicenseAgreement"
-        class="col-md-6">
-        </ui-form-input-checkbox>
+        <div data-ng-repeat="item in ctrl.model.multiInputData">
+          <ui-form-input-text data-element-name="item.name"
+                              data-ng-model="item.value"
+                              data-label="item.label"
+                              data-config="item"
+                              class="col-md-6">
+
+          </ui-form-input-text>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <ui-form-input-checkbox data-element-name="sampleCheckbox2"
+            data-ng-model="ctrl.model.payload.acceptLicenseAgreement.value"
+            data-label="ctrl.model.payload.acceptLicenseAgreement.label"
+            data-config="ctrl.model.metadata.acceptLicenseAgreement"
+            class="col-md-6">
+          </ui-form-input-checkbox>
+        </div>
       </div>
       <hr>
       <div class="row">

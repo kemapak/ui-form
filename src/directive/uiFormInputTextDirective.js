@@ -6,26 +6,65 @@ uiFormModule.directive('uiFormInputText', ['$compile', 'uiFormService', 'uiFormV
 		replace: true,
 		require: '^form',
 		scope: {
-			elementName: '@',
-			label: '=',
-			config: '=',
-			message: '@'
+			elementName: '@?',
+			label: '=?',
+			config: '=?',
+            flush: '=?'
 		},
 		template: '<div class="form-group"></div>',
 
 		link: function(scope, element, attrs, formController) {
 
-			var labelElement = uiFormService.getLabel({label: scope.label, isRequired: scope.config.isRequired, gridSize: scope.config.labelGridSize});
-			element.append(labelElement);
+			if ('undefined' ==  typeof scope.config) {
+                scope.config = {};
+			}
 
-			var inputEditModeElement = uiFormService.getText(scope.elementName, attrs.ngModel, scope.config);
-			inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config);
+            if ('undefined' ==  typeof scope.config.type) {
+                scope.config.type = 'text';
+            }
 
-			var inputViewModeElement = uiFormService.getTextViewMode(attrs.ngModel);
+            if ('undefined' ==  typeof scope.config.isRequired) {
+                scope.config.isRequired = false;
+            }
 
-			var inputWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout, gridSize: scope.config.valueGridSize});
+			if ('undefined' == typeof scope.elementName) {
+				scope.elementName = 'elementName_' + Math.random(new Data().getMilliseconds());
+			}
+
+            if ('undefined' == typeof scope.flush) {
+
+                scope.flush = false;
+            }
+
+            if (false == scope.flush && 'undefined' != typeof scope.label) {
+
+                var labelElement = uiFormService.getLabel({label: scope.label, isRequired: scope.config.isRequired});
+                element.append(labelElement);
+            }
+
+			var inputEditModeElement = uiFormService.getText({
+                name: scope.elementName,
+                type: scope.config.type,
+                placeholder: scope.config.placeholder,
+                ngModel: attrs.ngModel});
+            inputEditModeElement = uiFormValidationService.setValidationRules(inputEditModeElement, scope.config);
+            inputEditModeElement = uiFormValidationService.setErrorPopover(inputEditModeElement);
+
+
+            var inputViewModeElement = uiFormService.getTextViewMode(attrs.ngModel);
+
+			var inputWrapperElement = uiFormService.getWrapperElement({type: scope.config.type, layout: scope.config.layout});
 			inputWrapperElement.appendChild(inputEditModeElement);
 			inputWrapperElement.appendChild(inputViewModeElement);
+
+            var elementGridSize = ' col-sm-8';
+
+            if (true == scope.flush || 'undefined' == typeof scope.label) {
+
+                elementGridSize = ' col-sm-12';
+            }
+            inputWrapperElement.setAttribute('class', inputWrapperElement.getAttribute('class') + elementGridSize);
+
 			element.append(inputWrapperElement);
 
 			var ngElement = angular.element(inputEditModeElement);
