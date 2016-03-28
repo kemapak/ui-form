@@ -28,7 +28,7 @@ uiFormModule.directive('uiFormInputText', ['$compile', 'uiFormService', 'uiFormV
             }
 
 			if ('undefined' == typeof scope.elementName) {
-				scope.elementName = 'elementName_' + Math.random(new Data().getMilliseconds());
+				scope.elementName = 'elementName_' + Math.random(new Date().getMilliseconds());
 			}
 
             if ('undefined' == typeof scope.flush) {

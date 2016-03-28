@@ -28,7 +28,7 @@ uiFormModule.directive('uiFormInputCheckbox', ['$compile', 'uiFormService', 'uiF
             }
 
             if ('undefined' == typeof scope.elementName) {
-                scope.elementName = 'elementName_' + Math.random(new Data().getMilliseconds());
+                scope.elementName = 'elementName_' + Math.random(new Date().getMilliseconds());
             }
 
             if ('undefined' == typeof scope.flush) {
